@@ -1,6 +1,7 @@
 import { MdLocationOn } from "react-icons/md";
 import { AiOutlineDollar } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 const Job = ({ job }) => {
     const { logo, job_title, company_name, remote_or_onsite, location, job_type, salary, id } = job;
@@ -27,4 +28,7 @@ const Job = ({ job }) => {
     );
 };
 
+Job.propTypes = {
+    job : PropTypes.object.isRequired
+}
 export default Job;
