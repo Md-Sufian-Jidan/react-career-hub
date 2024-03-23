@@ -28,7 +28,8 @@ const Header = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <button className="btn bg-gradient-to-l from-[#7E90FE] to-[#9873FF] font-bold my-3 text-white">Start Applying</button>
+                <button className="btn bg-gradient-to-l from-[#7E90FE] to-[#9873FF] font-bold my-3 text-white
+                ">Start Applying</button>
             </div>
         </div>
     );
