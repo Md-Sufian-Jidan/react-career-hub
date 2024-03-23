@@ -7,7 +7,24 @@ import { FaArrowDown } from "react-icons/fa";
 
 const AppliedJobs = () => {
     const jobs = useLoaderData();
-    const [appliedJobs, setAppliedJob] = useState([])
+    const [appliedJobs, setAppliedJob] = useState([]);
+    const [displayJobs , setDisplayJobs] = useState([])
+
+    const handleJobsFilter = (filter) => {
+        if(filter === 'all'){
+            setDisplayJobs(appliedJobs);
+        }
+        else if(filter === 'Remote'){
+            const remoteJobs = appliedJobs.filter((job)=> job.remote_or_onsite === 'Remote')
+            setDisplayJobs(remoteJobs);
+        }
+        else if(filter === 'Onsite'){
+            const onsiteJobs = appliedJobs.filter((job)=> job.remote_or_onsite === 'Onsite');
+            setDisplayJobs(onsiteJobs)
+        }
+    }
+
+
     useEffect(() => {
         const storedJobsId = getStoredJobApplication();
         if (jobs.length > 0) {
@@ -17,10 +34,11 @@ const AppliedJobs = () => {
                 const job = jobs.find((job) => job.id === id)
                 jobsApplied.push(job);
             }
-            setAppliedJob(jobsApplied)
+            setAppliedJob(jobsApplied);
+            setDisplayJobs(jobsApplied)
             // console.log(jobs, storedJobsId, jobsApplied);
         }
-    }, [])
+    }, [jobs])
     return (
         <div>
             <h2 className="text-2xl">jobs i applied : {appliedJobs.length}</h2>
@@ -28,15 +46,15 @@ const AppliedJobs = () => {
            <div className="dropdown dropdown-end">
                 <div tabIndex={0} role="button" className="btn m-1">Filter By <FaArrowDown /></div>
                 <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                    <Link to={`/applied`}>All</Link>
-                    <Link>Remote</Link>
-                    <Link>OnSite</Link>
+                    <li onClick={()=> handleJobsFilter('all')}><a>All</a> </li>
+                    <li onClick={()=> handleJobsFilter('Remote')}><a>Remote</a></li>
+                    <li onClick={()=> handleJobsFilter('Onsite')}><a>OnSite</a></li>
                 </ul>
             </div>
            </div>
-            <div className="">
+            <div>
                 {
-                    appliedJobs.map((job) => <div key={job.id} className="border flex justify-between my-3 p-5">
+                    displayJobs.map((job) => <div key={job.id} className="border md:flex justify-between my-3 p-1 md:p-5">
                         <div className="flex items-center gap-5">
                             <div>
                                 <img className="bg-[#7E90FE1a] p-10" src={job.logo} alt="" />
@@ -51,7 +69,7 @@ const AppliedJobs = () => {
                             </div>
                         </div>
                         <div className="card-actions ">
-                            <Link to={`/job/${job.id}`}><button className="btn btn-primary font-bold">View Details</button></Link>
+                            <Link to={`/job/${job.id}`}><button className="btn btn-primary font-bold my-3">View Details</button></Link>
                         </div>
                     </div>
                     )
