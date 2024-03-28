@@ -4,11 +4,12 @@ import { getStoredJobApplication } from "../../Utility/localStorage";
 import { MdLocationOn } from "react-icons/md";
 import { AiOutlineDollar } from "react-icons/ai";
 import { FaArrowDown } from "react-icons/fa";
+import { Helmet } from "react-helmet-async";
 
 const AppliedJobs = () => {
     const jobs = useLoaderData();
     const [appliedJobs, setAppliedJob] = useState([]);
-    const [displayJobs , setDisplayJobs] = useState([])
+    const [displayJobs , setDisplayJobs] = useState([]);
 
     const handleJobsFilter = (filter) => {
         if(filter === 'all'){
@@ -24,9 +25,9 @@ const AppliedJobs = () => {
         }
     }
 
-
     useEffect(() => {
         const storedJobsId = getStoredJobApplication();
+        console.log(storedJobsId);
         if (jobs.length > 0) {
             // const jobsApplied = jobs.filter((job)=> storedJobsId.includes(job.id))
             const jobsApplied = [];
@@ -41,6 +42,9 @@ const AppliedJobs = () => {
     }, [jobs])
     return (
         <div>
+            <Helmet>
+                <title>Career Hub Applied Jobs</title>
+            </Helmet>
             <h2 className="text-2xl">jobs i applied : {appliedJobs.length}</h2>
            <div className="flex justify-end">
            <div className="dropdown dropdown-end">
@@ -74,7 +78,6 @@ const AppliedJobs = () => {
                     </div>
                     )
                 }
-
             </div>
         </div>
     );
